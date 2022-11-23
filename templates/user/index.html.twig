@@ -9,9 +9,38 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
     <a href="{{ path('app_add_user') }}" type="button" class="btn btn-primary">Add User</a>
 
 </div>
+
+{% if users|length == 0 %}
+        <div class="alert alert-warning" role="alert">
+            Il n'y a pas encore d'utilisateur enregistré. <a href="{{ path('user_create') }}" class="btn btn-warning pull-right">Créer un utilisateur</a>
+        </div>
+    {% else %}
+        <div class="row">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Creation Date</th>
+                    <th>Points</th>
+                    <th>Group</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.creationDate|date('d-m-Y') }}</td>
+                        <td>{{ user.points }}</td>
+                        <td>{{ user.team }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
 {% endblock %}
